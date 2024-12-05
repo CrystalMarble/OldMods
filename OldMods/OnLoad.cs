@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using HarmonyLib;
+﻿using HarmonyLib;
 using UnityEngine.Events;
 using UnityEngine.SceneManagement;
-using UnityEngine;
-using System.Reflection;
 
 
-namespace ExampleMod
+namespace OldMods
 {
 
     public class CrystalMarble
@@ -22,9 +18,11 @@ namespace ExampleMod
         {
             if (!CrystalMarble.Patched)
             {
-                new Harmony("com.example.examplemod").PatchAll();
+                new Harmony("dev.crystalmarble.oldmods").PatchAll();
                 CrystalMarble.Patched = false;
                 SceneManager.sceneLoaded -= new UnityAction<Scene, LoadSceneMode>(CrystalMarble.Patch);
+                CustomCosmeticLoader.Config.Init();
+                DiamondTimeViewer.Config.Init();
             }
         }
     }
