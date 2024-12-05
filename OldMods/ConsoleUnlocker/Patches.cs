@@ -5,6 +5,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using HarmonyLib;
+using MIU;
 using UnityEngine;
 
 namespace OldMods.ConsoleUnlocker
@@ -23,6 +24,16 @@ namespace OldMods.ConsoleUnlocker
             DevsField.SetValue(null, Devs);
             GlobalContext.Invoke<DevModeActivated>(Array.Empty<object>());
             MIU.Console.Instance.gameObject.SetActive(true);
+        }
+    }
+
+    [HarmonyPatch(typeof(PlatformSetup), "HasDevAccess")]
+    class PlatformSetupHasDevAccessPatch
+    {
+        public static bool Prefix(ref bool __result)
+        {
+            __result = true;
+            return false;
         }
     }
 }
