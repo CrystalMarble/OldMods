@@ -20,7 +20,7 @@ jobs:
         run: git clone https://github.com/CrystalMarble/dllrepo
       - name: Copy Ultra dlls
         run: |
-          tree /F
+          mkdir -Force OldMods/Libraries
           copy dllrepo/ultra/* OldMods/Libraries/
       - name: Download 0Harmony
         run: |
