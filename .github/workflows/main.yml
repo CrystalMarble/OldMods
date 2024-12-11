@@ -67,7 +67,7 @@ jobs:
       - name: ZIPs the contents
         uses: TheDoctor0/zip-release@0.7.1
         with:
-          filename: "OldMods-${{ github.ref_name }}.zip"
+          filename: "OldMods.zip"
           directory: Release
       - name: Create Relese
         uses: ncipollo/release-action@v1.10.0
