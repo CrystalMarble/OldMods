@@ -1,5 +1,6 @@
 name: Build .NET 4.8 App
-
+permissions:
+  contents: write
 on:
   push:
     branches:
