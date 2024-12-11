@@ -71,6 +71,6 @@ jobs:
       - name: Create Relese
         uses: ncipollo/release-action@v1.10.0
         with:
-          artifacts: "OldMods-${{ github.ref_name }}.zip"
+          artifacts: "OldMods/*.zip"
           tag: "${{ github.ref_name }}"
           name: "OldMods-${{ github.ref_name }}"
