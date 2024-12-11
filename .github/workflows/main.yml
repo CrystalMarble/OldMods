@@ -43,7 +43,7 @@ jobs:
           copy ./OldMods/bin/Release/OldMods.* Release/
       - name: Publish Build Artifacts
         if: success()
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: OldMods
           path: Release
