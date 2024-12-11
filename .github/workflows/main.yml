@@ -1,0 +1,49 @@
+name: Build .NET 4.8 App
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  build:
+    runs-on: windows-2019
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+        
+      - name: Checkout dll repo
+        run: git clone https://github.com/CrystalMarble/dllrepo
+      - name: Copy Ultra dlls
+        run: |
+          tree /F
+          copy dllrepo/ultra/* OldMods/Libraries/
+      - name: Download 0Harmony
+        run: |
+          Invoke-WebRequest "https://github.com/pardeike/Harmony/releases/download/v2.3.3.0/Harmony-Fat.2.3.3.0.zip" -OutFile ./_Harmony.zip
+          mkdir _Harmony
+          Expand-Archive -LiteralPath ./_Harmony.zip -DestinationPath ./_Harmony/
+          copy ./_Harmony/net48/0Harmony.dll ./OldMods/Libraries/
+      - name: Add msbuild to PATH
+        uses: microsoft/setup-msbuild@v2
+      - name: Setup NuGet
+        uses: NuGet/setup-nuget@v2
+        with:
+          nuget-version: "latest" 
+
+      - name: Build Solution
+        run: msbuild ./OldMods/OldMods.csproj /p:Configuration=Release
+      - name: Copy necessary files to release
+        run: |
+          mkdir Release
+          copy ./OldMods/bin/Release/OldMods.* Release/
+      - name: Publish Build Artifacts
+        if: success()
+        uses: actions/upload-artifact@v3
+        with:
+          name: OldMods
+          path: Release
